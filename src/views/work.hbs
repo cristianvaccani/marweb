@@ -1,0 +1,72 @@
+<div id="banner-area" class="banner-area" style="background-image:url(/images/banner/banner1.jpg)">
+  <div class="banner-text">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="banner-heading">
+            <h1 class="banner-title">Obras</h1>
+
+          </div>
+        </div><!-- Col end -->
+      </div><!-- Row end -->
+    </div><!-- Container end -->
+  </div><!-- Banner text end -->
+</div><!-- Banner area end -->
+
+<section id="main-container" class="main-container">
+  <div class="container">
+
+    <div class="row">
+      <div class="col-lg-8">
+        <div id="page-slider" class="page-slider small-bg">
+          {{#each work.listaFotos}}
+          <div class="item">
+            <img loading="lazy" class="img-fluid" src="/fotosObras/{{this}}" alt="project-image" />
+          </div>
+          {{/each}}
+          {{!-- <div class="item">
+            <img loading="lazy" class="img-fluid" src="images/projects/project4.jpg" alt="project-image" />
+          </div> --}}
+        </div><!-- Page slider end -->
+      </div><!-- Slider col end -->
+
+      <div class="col-lg-4 mt-5 mt-lg-0">
+
+        <h3 class="column-title mrt-0">{{work.titulo}}</h3>
+        <p>{{work.descripcion}}</p>
+
+        <ul class="project-info list-unstyled">
+          <li>
+            <p class="project-info-label">Nombre</p>
+            <p class="project-info-content">{{work.nombre}}</p>
+          </li>
+          <li>
+            <p class="project-info-label">Cliente</p>
+            <p class="project-info-content">{{work.cliente}}</p>
+          </li>
+          <li>
+            <p class="project-info-label">Ubicación</p>
+            <p class="project-info-content">{{work.ubicacion}}</p>
+          </li>
+          
+          <li>
+            <p class="project-info-label">Período de obra</p>
+            <p class="project-info-content">{{work.anio}}</p>
+          </li>
+          <li>
+            <p class="project-info-label">Tipo de obra</p>
+            <p class="project-info-content">{{work.tipoObra}}</p>
+          </li>
+          <li>
+            <p class="project-link">
+              <a class="btn btn-primary" target="_blank" href="/works">Ver todas</a>
+            </p>
+          </li>
+        </ul>
+
+      </div><!-- Content col end -->
+
+    </div><!-- Row end -->
+
+  </div><!-- Conatiner end -->
+</section><!-- Main container end -->

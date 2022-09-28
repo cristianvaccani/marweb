@@ -1,0 +1,252 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <form action="/curriculums/edit/{{cv.ID}}" method="POST" class="needs-validation">
+                        <input type="hidden" value="{{cv.ID}}" name="ID">
+                        <div class="form-row">
+                            <div class="col-md-6 mb-3">
+                                <label for="nombre">Nombre</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" value="{{cv.nombre}}"
+                                    required>
+                                <div class="invalid-feedback">
+                                    Campo requerido
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="apellido">Apellido</label>
+                                <input type="text" class="form-control" id="apellido" name="apellido"
+                                    value="{{cv.apellido}}" required>
+                                <div class="invalid-feedback">
+                                    Campo requerido
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6 mb-3">
+                                <label for="dni">Documento</label>
+                                <input type="number" min="1000000" max="99999999" class="form-control" id="dni"
+                                    name="dni" value="{{cv.dni}}" required>
+                                <div class="invalid-feedback">
+                                    Campo requerido
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="fechaNacimiento">Fecha Nacimiento</label>
+                                <input type="date" class="form-control" name="fechaNacimiento" placeholder="DD/MM/AAAA"
+                                    value="{{cv.fechanacimiento}}" required>
+                                <div class="invalid-feedback">
+                                    Campo requerido
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6 mb-3">
+                                <label for="nacionalidad">Nacionalidad</label>
+                                <input type="text" class="form-control" id="nacionalidad" name="nacionalidad"
+                                    value="{{cv.nacionalidad}}" required>
+                                <div class="invalid-feedback">
+                                    Campo requerido
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="provincia">Provincia</label>
+
+                                <select class="custom-select" name="provinciaID" id="provinciaID" required>
+                                    {{#each provincias}}
+                                    <option value="{{id}}" {{#selected}}selected="selected" {{/selected}}>
+                                        {{descripcion}}
+                                    </option>
+                                    {{/each}}
+                                </select>
+                                <div class="invalid-feedback">
+                                    Campo requerido
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6 mb-3">
+                                <label for="localidad">Ciudad</label>
+                                <input type="text" class="form-control" id="localidad" name="localidad"
+                                    value="{{cv.localidad}}" required>
+                                <div class="invalid-feedback">
+                                    Campo requerido
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="domicilio">Domicilio</label>
+                                <input type="text" class="form-control" id="domicilio" name="domicilio"
+                                    value="{{cv.domicilio}}" required>
+                                <div class="invalid-feedback">
+                                    Campo requerido
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6 mb-3">
+                                <label for="telefono">Teléfono</label>
+                                <input type="text" class="form-control" name="telefono" placeholder="xxx-xxxxxxx"
+                                    value="{{cv.telefono}}" required>
+                                <div class="invalid-feedback">
+                                    Campo requerido
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" value="{{cv.email}}">
+                                <div class="invalid-feedback">
+                                    Formato invalido
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6 mb-3">
+                                <label for="sexo">Sexo</label>
+                                <select class="custom-select" name="sexoID" id="sexoID" required>
+                                    {{#each sexos}}
+                                    <option value="{{id}}" {{#selected}}selected="selected" {{/selected}}>
+                                        {{descripcion}}
+                                    </option>
+                                    {{/each}}
+                                </select>
+                                <div class="invalid-feedback">
+                                    Campo requerido
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="estdoCivil">Estdo Civil</label>
+                                <select class="custom-select" name="estadoCivilID" id="estadoCivilID" required>
+                                    {{#each estadosCiviles}}
+                                    <option value="{{id}}" {{#selected}}selected="selected" {{/selected}}>
+                                        {{descripcion}}
+                                    </option>
+                                    {{/each}}
+                                </select>
+                                <div class="invalid-feedback">
+                                    Campo requerido
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6 mb-3">
+                                <label for="puestoID">Puesto</label>
+                                <select class="custom-select" name="puestoID" id="puestoID" required>
+                                    {{#each puestos}}
+                                    <option value="{{id}}" {{#selected}}selected="selected" {{/selected}}>
+                                        {{descripcion}}
+                                    </option>
+                                    {{/each}}
+                                </select>
+                                <div class="invalid-feedback">
+                                    Campo requerido
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="detallePuesto">Detalle/Especialidad</label>
+                                <textarea class="form-control" name="detallePuesto" rows="2"
+                                    required>{{cv.detallePuesto}}</textarea>
+                                <div class="invalid-feedback">
+                                    Campo requerido
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+
+                            <div class="col-md-6 mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="trabajoEnMarelli"
+                                        id="trabajoEnMarelli" {{#if cv.yaTrabajoEnMarelli}} value="true"
+                                        checked="checked" {{else}} value="" {{/if}}>
+                                    <label class="form-check-label" for="activo">
+                                        Trabajo con nosotros?
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="remuneracion">Remuneración neta pretendida</label>
+                                <input type="number" min="100" max="99999999" class="form-control" id="remuneracion"
+                                    name="remuneracion" value="{{cv.remuneracion}}">
+
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6 mb-3">
+                                <label for="trabajoActual">Trabajo actual</label>
+                                <textarea class="form-control" name="trabajoActual" rows="4"
+                                    required>{{cv.trabajoActual}}</textarea>
+                                <div class="invalid-feedback">
+                                    Campo requerido
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="trabajoAnterior">Trabajo anterior</label>
+                                <textarea class="form-control" name="trabajoAnterior" rows="4"
+                                    required>{{cv.trabajoAnterior}}</textarea>
+                                <div class="invalid-feedback">
+                                    Campo requerido
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6 mb-3">
+                                <label for="titulos">Títulos</label>
+                                <textarea class="form-control" name="titulos" rows="4"
+                                    required>{{cv.titulos}}</textarea>
+                                <div class="invalid-feedback">
+                                    Campo requerido
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="informacionAdicional">Información adicional</label>
+                                <textarea class="form-control" name="informacionAdicional"
+                                    rows="4">{{cv.informacionAdicional}}</textarea>
+
+                            </div>
+                        </div>
+                        <div class="form-row">
+
+                            <div class="col-md-6 mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="revisado" id="revisado" {{#if
+                                        cv.revisado}} value="true" checked="checked" {{else}} value="" {{/if}}>
+                                    <label class="form-check-label" for="revisado">
+                                        Revisado?
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="esFavorito" id="esFavorito"
+                                        {{#if cv.esFavorito}} value="true" checked="checked" {{else}} value="" {{/if}}>
+                                    <label class="form-check-label" for="esFavorito">
+                                        Es favorito?
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6 mb-3">
+                                
+                                {{#eq cv.archivo '-'}}
+                                No existe archivo adjunto
+                                {{else}}
+                                <label for="archivoCV">Archivo adjunto</label>
+                                <a href="download/{{cv.archivo}}" target="_blank"><i class="fas fa-download"></i></a>
+                                {{/eq}}
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Guardar</button>
+
+
+
+                    </form>
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

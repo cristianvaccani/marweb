@@ -1,0 +1,108 @@
+<div class="container-fluid">
+
+  <div class="jumbotron">
+    <form action="/curriculums" method="POST">
+      <div class="form-row">
+        <div class="col-md-3 mb-3">
+          <label for="puestoID">Puesto</label>
+          <select class="custom-select" name="puestoID" id="puestoID">
+            {{#each puestos}}
+            <option value="{{id}}" {{#selected}}selected="selected" {{/selected}}>
+              {{descripcion}}
+            </option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label for="provincia">Provincia</label>
+          <select class="custom-select" name="provinciaID" id="provinciaID">
+            {{#each provincias}}
+            <option value="{{id}}" {{#selected}}selected="selected" {{/selected}}>
+              {{descripcion}}
+            </option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label for="provincia">Oferta laboral</label>
+          <select class="custom-select" name="ofertaLaboralID" id="ofertaLaboralID">
+            {{#each ofertasLaborales}}
+            <option value="{{id}}" {{#selected}}selected="selected" {{/selected}}>
+              {{titulo}}
+            </option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="col-md-1">
+          <label for="edadDesde">Edad desde</label>
+          <input type="number" class="form-control" style="background-color: #ffffff;" id="edadDesde" name="edadDesde"
+            value="{{edadDesde}}">
+        </div>
+        <div class="col-md-1">
+          <label for="edadHasta">Edad hasta</label>
+          <input type="number" class="form-control" style="background-color: #ffffff;" id="edadHasta" name="edadHasta"
+            value="{{edadHasta}}">
+        </div>
+        <div class="col-md-1">
+          <label
+            for="btnBuscar">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+          <button class="btn btn-primary" type="submit" name="btnBuscar">Buscar</button>
+        </div>
+      </div>
+      <p>Cantidad de postulados filtrados: <strong>{{totalPostulados}} registros</strong></p>
+
+    </form>
+    {{{ pages }}}
+  </div>
+
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Visto</th>
+        <th scope="col">Fav</th>
+        <th scope="col">#</th>
+        <th scope="col">Nombre y Apellido</th>
+        <th scope="col">Edad</th>
+        <th scope="col">Provincia</th>
+        <th scope="col">Localidad</th>
+        <th scope="col">Puesto</th>
+        <th scope="col">Especialidad</th>
+        <th scope="col">Trabajo en Marelli</th>
+        <th scope="col">Postulado a</th>
+        <th scope="col">Teléfono</th>
+        <th scope="col">Fecha envio CV</th>
+        <th scope="col">Remuneración</th>
+        <th scope="col">Ver</th>
+        <th scope="col">Editar</th>
+        <th scope="col">Borrar</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each postulados}}
+      <tr>
+        <td>{{#if this.revisado}}<i class="fas fa-check"></i>{{/if}}</td>
+        <td>{{#if this.esFavorito}}<i class="fas fa-star"></i>{{/if}}</td>
+        <td>{{this.ID}}</td>
+        <td>{{this.nombre}} {{this.apellido}}</td>
+        <td>{{this.edad}}</td>
+        <td>{{this.provincia}}</td>
+        <td>{{this.localidad}}</td>
+        <td>{{this.puesto}}</td>
+        <td>{{this.detallePuesto}}</td>
+        <td>{{this.trabajoEnMarelli}}</td>
+        <td>{{this.postuladoA}}</td>
+        <td>{{this.telefono}}</td>
+        <td>{{this.fecha}}</td>
+        <td>$ {{this.remuneracionPretendida}}</td>
+        <td><a href="{{../pageUri}}view/{{this.ID}}"><i class="fas fa-eye"></i></a></td>
+        <td><a href="{{../pageUri}}edit/{{this.ID}}"><i class="fas fa-edit"></i></a></td>
+        <td><a href="{{../pageUri}}delete/{{this.ID}}"><i class="fas fa-trash"></i></a></td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  
+
+
+
+</div>

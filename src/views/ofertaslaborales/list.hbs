@@ -1,0 +1,37 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-12 pb-4">
+
+            <p>Ofertas laborales activas: {{cantActivas.length}}</p>
+            <a href="/ofertaslaborales/add" class="btn btn-primary btn-block">Crear nueva Oferta laboral</a>
+
+        </div>
+    </div>
+    {{#each jobs}}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-title text-uppercase d-flex justify-content-between">
+                    <h3>{{titulo}}</h3>
+                    <a href="/ofertaslaborales/delete/{{id}}" class="btn btn-danger align-self-center">Eliminar</a>
+                </div>
+                <div class="card-body">
+                    <img src="{{imagen}}" class="img-thumbnail">{{!-- card-img-top --}}
+                    <div class="entry-content" style="white-space: pre-line;">
+                        {{descripcion}}
+
+                    </div>
+                    {{!-- <p class="m-2">{{descripcion}}</p> --}}
+                    <p>Fecha publicación: {{fecha}}</p>
+                    {{#if ofertaActiva }}
+                    <p><strong>Oferta laboral Activa</strong></p>
+                    {{else}}
+                    <p>Oferta laboral Pausada</p>
+                    {{/if}}
+                    <a href="/ofertaslaborales/edit/{{id}}" class="btn btn-secondary">Editar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>

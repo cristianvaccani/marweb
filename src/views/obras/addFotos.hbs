@@ -1,0 +1,26 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <form action="/obras/addFotos/{{obra.id}}" enctype="multipart/form-data" method="POST">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Titulo" value="{{obra.titulo}}">
+                        </div>
+                        
+                        <div class="mb-3">
+                            Select images: <input type="file" name="fotos" multiple>
+                            
+                        </div>
+                        <div class="mb-3">
+                            <button class="btn btn-success btn-block">
+                                Guardar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <form action="/obras/add" enctype="multipart/form-data" method="POST">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Titulo"
+                                autofocus required>
+                        </div>
+
+                        <div class="mb-3">
+                            <textarea class="form-control" name="descripcion" id="descripcion" rows="6"
+                                placeholder="Descripcion" required></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre"
+                                required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="cliente" id="cliente" placeholder="Cliente"
+                                required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="ubicacion" id="ubicacion"
+                                placeholder="Ubicacion" required>
+                        </div>
+                        <div class="mb-3">
+                            <select class="custom-select" name="tipoObraID" id="tipoObraID" required>
+                                {{#each tipos}}
+                                <option value="{{id}}" {{#selected}}selected="selected" {{/selected}}>
+                                    {{descripcion}}
+                                </option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <input type="number" min="1990" max="2030" class="form-control" name="anio" id="anio"
+                                placeholder="Período de obra" required>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="activo" id="activo">
+                                <label class="form-check-label" for="activo">
+                                    Obra Activa
+                                </label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            Select images: <input type="file" name="fotos" multiple>
+                            
+                        </div>
+                        <div class="mb-3">
+                            <button class="btn btn-success btn-block">
+                                Guardar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

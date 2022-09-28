@@ -1,0 +1,78 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+
+
+                <div class="card-body">
+
+                    <form action="/ofertaslaborales/add" method="POST">
+                        <h4>Nueva oferta laboral</h4>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="titulo" placeholder="Título" autofocus {{#if
+                                valores}} value="{{valores.titulo}}" {{/if}} required>
+                            <div class="invalid-feedback">
+                                Campo requerido
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" name="descripcion" rows="12" placeholder="Descripción"
+                                required>{{valores.descripcion}}</textarea>
+                            <div class="invalid-feedback">
+                                Campo requerido
+                            </div>
+                            {{!-- {{#if valores}}
+                            <textarea class="form-control" name="descripcion" rows="12"
+                                placeholder="Descripción">{{valores.descripcion}}</textarea>
+                            {{else}}
+                            <textarea class="form-control" name="descripcion" rows="12"
+                                placeholder="Descripción"></textarea>
+                            {{/if}} --}}
+
+                        </div>
+                        <div class="mb-3">
+                            <input type="date" class="form-control" name="fecha" placeholder="DD/MM/AAAA" {{#if
+                                valores}} value="{{valores.fecha}}" {{/if}} required>
+                                <div class="invalid-feedback">
+                                    Campo requerido
+                                </div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="url" class="form-control" name="imagen" placeholder="imagen" {{#if valores}}
+                                value="{{valores.imagen}}" {{/if}} required>
+                                <div class="invalid-feedback">
+                                    Campo requerido
+                                </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="form-check">
+                                <div class="mb-3">
+                                    <input class="form-check-input" type="checkbox" name="activo" id="activo" {{#if
+                                        valores.activo}} value="true" checked="checked" {{else}} value="" {{/if}}>
+                                    <label class="form-check-label" for="activo">
+                                        Activo
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <button class="btn btn-success btn-block">
+                                Guardar
+                            </button>
+                        </div>
+                    </form>
+                    {{#each validaciones}}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        {{this.msg}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {{/each}}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,149 @@
+<div id="banner-area" class="banner-area" style="background-image:url(images/banner/banner1.jpg)">
+  <div class="banner-text">
+    <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+              <div class="banner-heading">
+                <h1 class="banner-title">Ofertas laborales</h1>
+                
+              </div>
+          </div><!-- Col end -->
+        </div><!-- Row end -->
+    </div><!-- Container end -->
+  </div><!-- Banner text end -->
+</div><!-- Banner area end --> 
+
+<section id="main-container" class="main-container">
+  <div class="container">
+    <div class="row">
+       <div class="col-lg-8 mx-auto">
+{{#each jobs}}
+        <div class="post">
+          <div class="post-media post-image">
+            <img loading="lazy" src="{{imagen}}" class="img-fluid" alt="post-image">
+          </div>
+
+          <div class="post-body">
+            <div class="entry-header">
+              <div class="post-meta">
+                <span class="post-meta-date"><i class="fa fa-hashtag"></i> {{id}}</span>
+                <span class="post-comment"><i class="far fa-calendar"></i> {{fecha}}</span>
+
+              </div>
+              <h2 class="entry-title">
+                {{!-- <a href="news-single.html">We Just Completes $17.6 million Medical Clinic in Mid-Missouri</a> --}}
+                {{titulo}}
+              </h2>
+            </div><!-- header end -->
+
+            <div class="entry-content" >
+              <p>{{descripcion}}</p>
+            </div>
+
+            <div class="post-footer">
+              <a href="/job/{{id}}" class="btn btn-primary">Continuar leyendo</a>
+            </div>
+
+          </div><!-- post-body end -->
+        </div><!-- 1st post end -->
+ {{/each}}
+
+
+        {{!-- <nav class="paging" aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-double-left"></i></a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-double-right"></i></a></li>
+          </ul>
+        </nav> --}}
+
+      </div><!-- Content Col end -->
+
+      <div class="col-lg-4">
+
+        <div class="sidebar sidebar-right">
+          <div class="widget recent-posts">
+            <h3 class="widget-title">Ofertas laborales recientes</h3>
+            <ul class="list-unstyled">
+{{#each jobs}}
+              <li class="d-flex align-items-center">
+                <div class="posts-thumb">
+                  <a href="/job/{{id}}"><img loading="lazy" alt="img" src="{{imagen}}"></a>
+                </div>
+                <div class="post-info">
+                  <h4 class="entry-title">
+                    <a href="/job/{{id}}">{{titulo}}</a>
+                  </h4>
+                </div>
+              </li><!-- 1st post end-->
+ {{/each}}
+              {{!-- <li class="d-flex align-items-center">
+                <div class="posts-thumb">
+                  <a href="#"><img loading="lazy" alt="img" src="images/news/news2.jpg"></a>
+                </div>
+                <div class="post-info">
+                  <h4 class="entry-title">
+                    <a href="#">Thandler Airport Water Reclamation Facility Expansion Project Named</a>
+                  </h4>
+                </div>
+              </li><!-- 2nd post end-->
+
+              <li class="d-flex align-items-center">
+                <div class="posts-thumb">
+                  <a href="#"><img loading="lazy" alt="img" src="images/news/news3.jpg"></a>
+                </div>
+                <div class="post-info">
+                  <h4 class="entry-title">
+                    <a href="#">Silicon Bench And Cornike Begin Construction Solar Facilities</a>
+                  </h4>
+                </div>
+              </li><!-- 3rd post end--> --}}
+
+            </ul>
+
+          </div><!-- Recent post end -->
+
+          <div class="widget">
+            <h3 class="widget-title">Enlaces utiles</h3>
+            <ul class="arrow nav nav-tabs">
+              <li><a href="/curriculum">Enviar curriculum</a></li>
+              <li><a href="/contact">Enviar email</a></li>
+            </ul>
+          </div><!-- Categories end -->
+
+          {{!-- <div class="widget">
+            <h3 class="widget-title">Archives </h3>
+            <ul class="arrow nav nav-tabs">
+              <li><a href="#">Feburay 2016</a></li>
+              <li><a href="#">January 2016</a></li>
+              <li><a href="#">December 2015</a></li>
+              <li><a href="#">November 2015</a></li>
+              <li><a href="#">October 2015</a></li>
+            </ul>
+          </div><!-- Archives end -->
+
+          <div class="widget widget-tags">
+            <h3 class="widget-title">Tags </h3>
+
+            <ul class="list-unstyled">
+              <li><a href="#">Construction</a></li>
+              <li><a href="#">Design</a></li>
+              <li><a href="#">Project</a></li>
+              <li><a href="#">Building</a></li>
+              <li><a href="#">Finance</a></li>
+              <li><a href="#">Safety</a></li>
+              <li><a href="#">Contracting</a></li>
+              <li><a href="#">Planning</a></li>
+            </ul>
+          </div><!-- Tags end --> --}}
+
+
+        </div><!-- Sidebar end -->
+      </div><!-- Sidebar Col end -->
+
+    </div><!-- Main row end -->
+
+  </div><!-- Container end -->
+</section><!-- Main container end -->

@@ -1,0 +1,93 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-12 pb-4">
+
+            <p>Obras activas: {{cantActivas.length}}</p>
+            <a href="/obras/add" class="btn btn-primary btn-block">Crear nueva Obra</a>
+
+        </div>
+    </div>
+    {{#each obras}}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-title text-uppercase d-flex justify-content-between">
+                    <h3>{{titulo}}</h3>
+                    <a href="/obras/delete/{{id}}" class="btn btn-danger align-self-center">Eliminar</a>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {{#each listaFotos}}
+                        {{#eq @index 0}}
+
+                        <div class="imageObra" style="float:left;padding-left: 10px;">
+                            <a id="btn-favourite" href="/obras/setFavourite/{{../id}}?{{this}}">
+                                <img class="btn-favourite"
+                                    src="http://cdn1.iconfinder.com/data/icons/diagona/icon/16/102.png" /></a>
+                            <a href="/obras/deleteFoto/{{../id}}?{{this}}">
+                                <img class="btn-delete"
+                                    src="http://cdn1.iconfinder.com/data/icons/diagona/icon/16/101.png" /></a>
+                            <img style='width:200px;float:left; height:200px;margin-bottom:5px; margin-left:5px;border:2px solid #ffb600;border-radius:10px;'
+                                src="/fotosObras/{{this}}" />
+                        </div>
+                        {{else}}
+                        <div class="imageObra" onmouseover="showFavourite(this)" onmouseout="hiddeFavourite(this)"
+                            style="float:left;padding-left: 10px;">
+                            <a id="btn-favourite" href="/obras/setFavourite/{{../id}}?{{this}}" style="display:none;" title="Click para establecer como foto principal">
+                                <img class="btn-favourite"
+                                    src="http://cdn1.iconfinder.com/data/icons/diagona/icon/16/102.png" /></a>
+                            <a href="/obras/deleteFoto/{{../id}}?{{this}}">
+                                <img class="btn-delete"
+                                    src="http://cdn1.iconfinder.com/data/icons/diagona/icon/16/101.png" /></a>
+                            <img style='width:200px;float:left; height:200px;margin-bottom:5px; margin-left:5px;border:2px solid #ffb600;border-radius:10px;'
+                                src="/fotosObras/{{this}}" />
+                        </div>
+
+                        {{/eq}}
+
+
+
+
+                        {{!-- <img src="/fotosObras/{{this}}" class="img-fluid img-thumbnail"
+                            style="width:200px; height: 200px;">
+                        --}}
+                        {{/each}}
+
+
+                    </div>
+                    <a href="/obras/addFotos/{{id}}" class="btn btn-secondary">Agregar fotos</a>
+
+
+                    <div class="entry-content" style="white-space: pre-line;">
+                        {{descripcion}}
+
+                    </div>
+                    <p class="m-2">Nombre: {{nombre}}</p>
+                    <p class="m-2">Cliente: {{cliente}}</p>
+                    <p class="m-2">Ubicación: {{ubicacion}}</p>
+                    <p class="m-2">Tipo de obra: {{tipoObra}}</p>
+                    <p class="m-2">{{descripcion}}</p>
+                    <p>Período de obra: {{anio}}</p>
+                    {{#if obraActiva}}
+                    <p><strong>Obra Activa</strong></p>
+                    {{else}}
+                    <p>Obra Pausada</p>
+                    {{/if}}
+                    <a href="/obras/edit/{{id}}" class="btn btn-secondary">Editar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>
+
+<script>
+
+    function showFavourite(x) {
+        x.childNodes[1].style['display'] = 'block';
+    }
+
+    function hiddeFavourite(x) {
+        x.childNodes[1].style['display'] = 'none';
+    }
+</script>
