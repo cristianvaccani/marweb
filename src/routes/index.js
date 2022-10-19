@@ -55,11 +55,15 @@ const esIndex = true;
 
 router.get('/', async (req, res) => {
     const works = await getAllWorks();
+    console.log('Cantidad de works:',works.length);
     const tipos = await getAllTipos();
+    console.log('Cantidad de tipos:',tipos.length);
+
     res.render('index', { esIndex: true, works,tipos });
 });
 
 function getAllWorks(){
+    console.log('entro en getAllWorks');
     return new Promise((res,rej)=>{
         const works = pool.query("SELECT o.*,t.descripcion as tipoObra,(select f.nombre FROM obrasfotos f WHERE f.obraID =o.id order by esPrincipal desc limit 1) as foto from obras o INNER JOIN cnf_tiposobras t on t.id = o.tipoObraID where o.activo =true order by anio desc;");
         if(works.length ===0){
@@ -70,8 +74,9 @@ function getAllWorks(){
 
 }
 function getAllTipos(){
+    console.log('entro en getAllTipos');
     return new Promise((res,rej)=>{
-        const tipos = pool.query("SELECT * FROM cnf_tiposObras");
+        const tipos = pool.query("SELECT * FROM cnf_tiposObras;");
         if(tipos.length ===0){
             rej(new Error('No hay tipos.'))
         }
