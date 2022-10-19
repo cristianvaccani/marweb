@@ -41,13 +41,44 @@ function checkFileType(file, cb) {
 
 const esIndex = true;
 
-router.get('/', async (req, res) => {
+/* router.get('/', async (req, res) => {
+    console.log('ENTRO AL INDEX#######################################');
     const works = await pool.query("SELECT o.*,t.descripcion as tipoObra,(select f.nombre FROM obrasfotos f WHERE f.obraID =o.id order by esPrincipal desc limit 1) as foto from obras o INNER JOIN cnf_tiposobras t on t.id = o.tipoObraID where o.activo =true order by anio desc;");
+    console.log(works);
     const tipos = await pool.query("SELECT * FROM cnf_tiposObras");
     
+    
+
     res.render('index', { esIndex: true, works,tipos });
     
+}); */
+
+router.get('/', async (req, res) => {
+    const works = await getAllWorks();
+    const tipos = await getAllTipos();
+    res.render('index', { esIndex: true, works,tipos });
 });
+
+function getAllWorks(){
+    return new Promise((res,rej)=>{
+        const works = pool.query("SELECT o.*,t.descripcion as tipoObra,(select f.nombre FROM obrasfotos f WHERE f.obraID =o.id order by esPrincipal desc limit 1) as foto from obras o INNER JOIN cnf_tiposobras t on t.id = o.tipoObraID where o.activo =true order by anio desc;");
+        if(works.length ===0){
+            rej(new Error('No hay obras.'))
+        }
+        res(works);
+    });
+
+}
+function getAllTipos(){
+    return new Promise((res,rej)=>{
+        const tipos = pool.query("SELECT * FROM cnf_tiposObras");
+        if(tipos.length ===0){
+            rej(new Error('No hay tipos.'))
+        }
+        res(tipos);
+    });
+
+}
 
 router.get('/contact', async (req, res) => {
     res.render('contact', { esIndex: true });
