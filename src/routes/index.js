@@ -54,10 +54,12 @@ const esIndex = true;
 }); */
 
 router.get('/', async (req, res) => {
-    const works = await getAllWorks();
-    console.log('Cantidad de works:',works.length);
     const tipos = await getAllTipos();
     console.log('Cantidad de tipos:',tipos.length);
+
+    const works = await getAllWorks();
+    console.log('Cantidad de works:',works.length);
+    
 
     res.render('index', { esIndex: true, works,tipos });
 });
