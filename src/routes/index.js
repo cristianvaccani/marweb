@@ -154,7 +154,7 @@ router.get('/error', async (req, res) => {
 
 router.get('/works', async (req, res) => {
     const works = await pool.query("SELECT o.*,t.descripcion as tipoObra,(select f.nombre FROM obrasfotos f WHERE f.obraID =o.id order by esPrincipal desc limit 1) as foto from obras o INNER JOIN cnf_tiposobras t on t.id = o.tipoObraID where o.activo =true order by anio desc;");
-    const tipos = await pool.query("SELECT * FROM cnf_tiposObras");
+    const tipos = await pool.query("SELECT * FROM cnf_tiposobras");
     
     res.render('works', { esIndex: true, works,tipos });
 });
