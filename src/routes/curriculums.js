@@ -302,7 +302,7 @@ async function GetSexos(valor) {
 };
 
 async function GetEstadosCiviles(valor) {
-    const estados = await pool.query("SELECT * FROM cnf_estadosCiviles");
+    const estados = await pool.query("SELECT * FROM cnf_estadosciviles");
 
     const newEstado = { id: 0, descripcion: "Todos" };
     estados.unshift(newEstado);
