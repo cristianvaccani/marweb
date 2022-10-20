@@ -185,7 +185,7 @@ router.get('/curriculum/:id?', async (req, res) => {
     
     provincias.splice(0, 0, provincias.splice(19, 1)[0]);
     const sexos = await pool.query("SELECT * FROM cnf_sexos order by descripcion desc");
-    const estadosCiviles = await pool.query("SELECT * FROM cnf_estadosCiviles");
+    const estadosCiviles = await pool.query("SELECT * FROM cnf_estadosciviles");
     const puestos = await pool.query("SELECT * FROM cnf_puestos");
     res.render('curriculum', { esIndex: true, provincias, sexos, estadosCiviles, puestos, ofertaLaboralID, tituloOfertaLaboral });
 });
