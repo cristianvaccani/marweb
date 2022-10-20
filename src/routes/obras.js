@@ -247,7 +247,7 @@ router.get('/delete/:id', isLoggedIn, async (req, res) => {
 });
 
 async function GetTiposObras(valor) {
-    const tipos = await pool.query("SELECT * FROM cnf_tiposObras");
+    const tipos = await pool.query("SELECT * FROM cnf_tiposobras");
 
     return tipos;
 };
