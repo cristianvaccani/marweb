@@ -175,7 +175,7 @@ router.get('/curriculum/:id?', async (req, res) => {
     let ofertaLaboralID = req.params.id;
     let tituloOfertaLaboral = "";
     if (ofertaLaboralID) {
-        const ofertaLaboral = await pool.query("SELECT * FROM ofertasLaborales where activo =true && id=?", ofertaLaboralID);
+        const ofertaLaboral = await pool.query("SELECT * FROM ofertaslaborales where activo =true && id=?", ofertaLaboralID);
         if (ofertaLaboral.length > 0) {
             ofertaLaboralID = ofertaLaboral[0].id;
             tituloOfertaLaboral = ofertaLaboral[0].titulo;
