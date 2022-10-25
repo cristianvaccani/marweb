@@ -104,7 +104,7 @@ router.post('/sendmail', async (req, res) => {
 `;
     const info = await transporter.sendMail({
         from: "'Marelli web' <3416173320.marelli@gmail.com>",
-        to: 'sistema@marelli.com.ar',
+        to: '3416173320.marelli@gmail.com',
         subject: 'Contacto desde la web',
         html: contentHTML
     });
