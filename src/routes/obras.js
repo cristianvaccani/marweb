@@ -170,7 +170,7 @@ router.get('/deleteFoto/:parametros', isLoggedIn, async (req, res) => {
     const parametros = req.url.split('/')[2].split('?');
     const id = parametros[0];
     const nombre = parametros[1].replaceAll('%', ' ');
-    const fotos = await pool.query('SELECT * FROM obrasFotos WHERE obraID=? and nombre=?', [id, nombre]);
+    const fotos = await pool.query('SELECT * FROM obrasfotos WHERE obraID=? and nombre=?', [id, nombre]);
     if (fotos.length === 0) {
         req.flash('message', 'Foto NO encontrada');
         res.redirect('/obras/list');
@@ -193,10 +193,10 @@ router.get('/setFavourite/:parametros', isLoggedIn, async (req, res) => {
     
     /* Begin transaction */
     inTransaction(pool, function (db, next) {
-        db.query('Update obrasFotos set esPrincipal =false WHERE obraID=? ', [id], function (err, cb) {
+        db.query('Update obrasfotos set esPrincipal =false WHERE obraID=? ', [id], function (err, cb) {
             if (err) return next(err);
 
-            db.query('Update obrasFotos set esPrincipal =true WHERE obraID=? and nombre =?', [id, nombre], function (err) {
+            db.query('Update obrasfotos set esPrincipal =true WHERE obraID=? and nombre =?', [id, nombre], function (err) {
             });
             next();
         });
