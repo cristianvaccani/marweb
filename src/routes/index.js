@@ -8,7 +8,9 @@ const multer = require('multer');
 const storage = multer.diskStorage({
     destination: 'archivosCV/',
     filename: function (req, file, cb) {
-        cb("", Date.now() + file.originalname);
+        const partesNombre = file.originalname.split('.'); 
+        cb("", partesNombre[0] + "_" +Date.now()+'.'+partesNombre[1]);
+        /* cb("", file.originalname + "_" +Date.now()); */
     }
 
 });
