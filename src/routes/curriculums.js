@@ -4,6 +4,7 @@ const { body, validationResult } = require('express-validator');
 const path = require('path');
 
 const pool = require('../database');
+const fs = require('fs');
 
 const Pagination = require('../public/js/pagination');
 const registrosPorPagina = 20;
@@ -213,7 +214,7 @@ router.post('/edit/:id', isLoggedIn, async (req, res) => {
     let favorito = (req.body.esFavorito != undefined);
     cv.esFavorito = favorito;
     pool.query("UPDATE curriculum set ? WHERE ID =?", [cv, cv.ID]);
-    req.flash('success', 'Curriculum editado correctamente!');
+    req.flash('success', 'Curriculum editado correctamente!'+'valor revisado:'+yaRevisado);
     res.redirect('/curriculums');
 
 });
@@ -245,11 +246,48 @@ router.get('/delete/:id', isLoggedIn, async (req, res) => {
 })
 router.post('/delete/:id', isLoggedIn, async (req, res) => {
     const { id } = req.params;
+    let sqlQuery = "call getCurriculum(" + id + ")";
 
-    pool.query("UPDATE curriculum set activo = 0 WHERE ID =?", id);
-    req.flash('success', 'Curriculum eliminado correctamente!');
-    res.redirect('/curriculums');
+    pool.query(sqlQuery, async function (err, recordset) {
+        if (err) {
+            console.log(err);
+        }
+        const cvs = recordset[0];
+        if (cvs.length === 0) {
+            req.flash('message', 'Curriculum no encontrado');
+            res.redirect('/curriculums');
+        } else {
+            //si no hay archivo de CV solo elimino la persona con activo =0
+            if (cvs[0].archivo == '-') {
+                pool.query("UPDATE curriculum set activo = 0 WHERE ID =?", id);
+                req.flash('success', 'Curriculum eliminado correctamente!');
+                res.redirect('/curriculums');
+            } else {
+                //si hay archivo de CV, primero elimino fisicamente el archivo y despues elimino la persona con activo =0
+                const archivo = path.join(__dirname, '..', '..', 'archivosCV', cvs[0].archivo);
+                fs.stat(archivo, function (err, stats) {
+                    console.log(stats);//here we got all information of file in stats variable
 
+                    if (err) {
+                        return console.error(err);
+                    }
+
+                    fs.unlink(archivo, function (err) {
+                        if (err) {
+                            return console.log(err);
+                        } else {
+                            console.log('file deleted successfully');
+                            pool.query("UPDATE curriculum set activo = 0 WHERE ID =?", id);
+                            req.flash('success', 'Curriculum eliminado correctamente!');
+                            res.redirect('/curriculums');
+                        }
+                    });
+                });
+            }
+
+        }
+
+    });
 })
 
 async function GetPuestos(valor) {
