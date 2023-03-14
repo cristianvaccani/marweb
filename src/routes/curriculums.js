@@ -209,12 +209,13 @@ router.post('/edit/:id', isLoggedIn, async (req, res) => {
         trabajoAnterior, titulos, informacionAdicional,
         trabajoEnMarelli, remuneracion, ofertaLaboralID
     } = req.body;
-    let yaRevisado = (req.body.revisado != undefined);
+    cv.trabajoEnMarelli = (cv.trabajoEnMarelli != undefined)?1:0;
+    let yaRevisado = (req.body.revisado != undefined)?1:0;
     cv.revisado = yaRevisado;
-    let favorito = (req.body.esFavorito != undefined);
+    let favorito = (req.body.esFavorito != undefined)?1:0;
     cv.esFavorito = favorito;
     pool.query("UPDATE curriculum set ? WHERE ID =?", [cv, cv.ID]);
-    req.flash('success', 'Curriculum editado correctamente!'+'valor revisado:'+yaRevisado);
+    req.flash('success', 'Curriculum editado correctamente!');
     res.redirect('/curriculums');
 
 });
