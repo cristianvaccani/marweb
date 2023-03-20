@@ -3,7 +3,7 @@
   <div class="jumbotron">
     <form action="/curriculums" method="POST">
       <div class="form-row">
-        <div class="col-md-3 mb-3">
+        <div class="col-md-2">
           <label for="puestoID">Puesto</label>
           <select class="custom-select" name="puestoID" id="puestoID">
             {{#each puestos}}
@@ -13,7 +13,7 @@
             {{/each}}
           </select>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label for="provincia">Provincia</label>
           <select class="custom-select" name="provinciaID" id="provinciaID">
             {{#each provincias}}
@@ -24,7 +24,7 @@
           </select>
         </div>
         <div class="col-md-3">
-          <label for="provincia">Oferta laboral</label>
+          <label for="ofertaLaboral">Oferta laboral</label>
           <select class="custom-select" name="ofertaLaboralID" id="ofertaLaboralID">
             {{#each ofertasLaborales}}
             <option value="{{id}}" {{#selected}}selected="selected" {{/selected}}>
@@ -44,9 +44,28 @@
             value="{{edadHasta}}">
         </div>
         <div class="col-md-1">
-          <label
-            for="btnBuscar">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-          <button class="btn btn-primary" type="submit" name="btnBuscar">Buscar</button>
+          <label for="opVisto">Visto</label>
+          <select class="custom-select" name="opVistoID" id="opVistoID">
+            {{#each opVistos}}
+            <option value="{{id}}" {{#selected}}selected="selected" {{/selected}}>
+              {{descripcion}}
+            </option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="col-md-1">
+          <label for="opFavorito">Favorito</label>
+          <select class="custom-select" name="opFavoritoID" id="opFavoritoID">
+            {{#each opFavoritos}}
+            <option value="{{id}}" {{#selected}}selected="selected" {{/selected}}>
+              {{descripcion}}
+            </option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="col-md-1">
+          
+          <button class="btn btn-primary" style="margin-top: 34px;" type="submit" name="btnBuscar">Buscar</button>
         </div>
       </div>
       <p>Cantidad de postulados filtrados: <strong>{{totalPostulados}} registros</strong></p>

@@ -214,6 +214,9 @@ router.post('/curriculum',  /* archivosCV.single('archivoCV'),  */ async (req, r
                 trabajoAnterior, titulos, informacionAdicional,
                 trabajoEnMarelli, remuneracion, ofertaLaboralID
             } = req.body;
+            if(!Number.isInteger(cv.remuneracion)) {
+                cv.remuneracion = 0;
+            }
             let yaTrabajoEnMarelli = (req.body.trabajoEnMarelli != undefined);
             cv.trabajoEnMarelli = yaTrabajoEnMarelli;
             cv.fechaSubido = new Date;

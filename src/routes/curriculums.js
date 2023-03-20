@@ -33,10 +33,20 @@ router.get('/:page?', isLoggedIn, async (req, res) => {
         req.session.edadHasta = null;
     }
     const _edadHasta = req.session.edadHasta;
+    if (!req.session.opVistoID) {
+        req.session.opVistoID = 0;
+    }
+    const _opVistoID = req.session.opVistoID;
+    if (!req.session.opFavoritoID) {
+        req.session.opFavoritoID = 0;
+    }
+    const _opFavoritoID = req.session.opFavoritoID;
 
     const puestos = await GetPuestos(_puestoID);
     const provincias = await GetProvincias(_provinciaID);
     const ofertasLaborales = await GetOfertasLaborales(_ofertaLaboralID);
+    const opVistos = await GetOpVistos(_opVistoID);
+    const opFavoritos = await GetOpFavoritos(_opFavoritoID);
 
     const _perPage = registrosPorPagina;
     var page_id = req.session.currentPage;
@@ -50,7 +60,8 @@ router.get('/:page?', isLoggedIn, async (req, res) => {
     //Change pageUri to your page url without the 'page' query string 
     const pageUri = '/curriculums/';
 
-    let sqlQuery = "call filtrarCurriculums(" + _puestoID + "," + _provinciaID + "," + _ofertaLaboralID + "," + _edadDesde + "," + _edadHasta + ")";
+    //let sqlQuery = "call filtrarCurriculums(" + _puestoID + "," + _provinciaID + "," + _ofertaLaboralID + "," + _edadDesde + "," + _edadHasta + ")";
+    let sqlQuery = "call obtenerCurriculums(" + _puestoID + "," + _provinciaID + "," + _ofertaLaboralID + "," + _edadDesde + "," + _edadHasta + "," + _opVistoID + "," + _opFavoritoID + ")";
     console.log(sqlQuery)
 
     pool.query(sqlQuery, function (err, recordset) {
@@ -69,8 +80,8 @@ router.get('/:page?', isLoggedIn, async (req, res) => {
         var listaPostulados = recordset[0].splice(ini, fin);
 
         res.render('curriculums/postulados', {
-            postulados: listaPostulados, puestos, provincias, ofertasLaborales, _puestoID, _provinciaID,
-            _ofertaLaboralID, _ofertaLaboralID, edadDesde: _edadDesde, edadHasta: _edadHasta, pages: Paginate.links(), totalPostulados: totalCount, pageUri: pageUri
+            postulados: listaPostulados, puestos, provincias, ofertasLaborales,opVistos,opFavoritos, _puestoID, _provinciaID,
+            _ofertaLaboralID, _opVistoID,_opFavoritoID, edadDesde: _edadDesde, edadHasta: _edadHasta, pages: Paginate.links(), totalPostulados: totalCount, pageUri: pageUri
         });
 
     });
@@ -109,10 +120,24 @@ router.post('/:page?', isLoggedIn, async (req, res) => {
         req.session.edadHasta = null;
     }
     const _edadHasta = req.session.edadHasta;
+    if (req.body.opVistoID) {
+        req.session.opVistoID = req.body.opVistoID;
+    } else {
+        req.session.opVistoID = 0;
+    }
+    const _opVistoID = req.session.opVistoID;
+    if (req.body.opFavoritoID) {
+        req.session.opFavoritoID = req.body.opFavoritoID;
+    } else {
+        req.session.opFavoritoID = 0;
+    }
+    const _opFavoritoID = req.session.opFavoritoID;
 
     const puestos = await GetPuestos(_puestoID);
     const provincias = await GetProvincias(_provinciaID);
     const ofertasLaborales = await GetOfertasLaborales(_ofertaLaboralID);
+    const opVistos = await GetOpVistos(_opVistoID);
+    const opFavoritos = await GetOpFavoritos(_opFavoritoID);
 
     const _perPage = registrosPorPagina;
     // Get current page from url (request parameter)
@@ -121,7 +146,8 @@ router.post('/:page?', isLoggedIn, async (req, res) => {
     //Change pageUri to your page url without the 'page' query string 
     const pageUri = '/curriculums/';
 
-    let sqlQuery = "call filtrarCurriculums(" + _puestoID + "," + _provinciaID + "," + _ofertaLaboralID + "," + _edadDesde + "," + _edadHasta + ")";
+    //let sqlQuery = "call filtrarCurriculums(" + _puestoID + "," + _provinciaID + "," + _ofertaLaboralID + "," + _edadDesde + "," + _edadHasta + ")";
+    let sqlQuery = "call obtenerCurriculums(" + _puestoID + "," + _provinciaID + "," + _ofertaLaboralID + "," + _edadDesde + "," + _edadHasta + "," + _opVistoID + "," + _opFavoritoID + ")";
     console.log(sqlQuery)
 
     pool.query(sqlQuery, function (err, recordset) {
@@ -139,7 +165,7 @@ router.post('/:page?', isLoggedIn, async (req, res) => {
         var listaPostulados = recordset[0].splice(ini, fin);
 
         res.render('curriculums/postulados', {
-            postulados: listaPostulados, puestos, provincias, ofertasLaborales, _puestoID, _provinciaID, _ofertaLaboralID,
+            postulados: listaPostulados, puestos, provincias, ofertasLaborales,opVistos,opFavoritos, _puestoID, _provinciaID, _ofertaLaboralID,_opVistoID,_opFavoritoID, 
             edadDesde: _edadDesde, edadHasta: _edadHasta, pages: Paginate.links(), totalPostulados: totalCount, pageUri: pageUri
         });
 
@@ -350,6 +376,36 @@ async function GetEstadosCiviles(valor) {
     seleccionado.selected = true;
 
     return estados;
+};
+
+async function GetOpVistos(valor) {
+    const opVistos = [];
+    const newOp0 = { id: 0, descripcion: "Todos" };
+    opVistos.unshift(newOp0);
+    const newOp1 = { id: 1, descripcion: "Vistos" };
+    opVistos.unshift(newOp1);
+    const newOp2 = { id: 2, descripcion: "No Vistos" };
+    opVistos.unshift(newOp2);
+
+    const seleccionado = opVistos.find(e => e.id == valor);
+    seleccionado.selected = true;
+
+    return opVistos;
+};
+
+async function GetOpFavoritos(valor) {
+    const OpFavoritos = [];
+    const newOp0 = { id: 0, descripcion: "Todos" };
+    OpFavoritos.unshift(newOp0);
+    const newOp1 = { id: 1, descripcion: "Favoritos" };
+    OpFavoritos.unshift(newOp1);
+    const newOp2 = { id: 2, descripcion: "No Favoritos" };
+    OpFavoritos.unshift(newOp2);
+
+    const seleccionado = OpFavoritos.find(e => e.id == valor);
+    seleccionado.selected = true;
+
+    return OpFavoritos;
 };
 
 router.get('/edit/download/:id', isLoggedIn, async (req, res) => {
