@@ -71,13 +71,13 @@ router.get('/:page?', isLoggedIn, async (req, res) => {
         }
         console.log(recordset);
 
-
-        totalCount = recordset[0].length;
+        var datos = recordset[0].sort((a, b) => b.ID - a.ID);
+        totalCount = datos.length;
         // Instantiate Pagination class
         const Paginate = new Pagination(totalCount, currentPage, pageUri, _perPage);
         const ini = (currentPage - 1) * _perPage;
         const fin = ini + _perPage;
-        var listaPostulados = recordset[0].splice(ini, fin);
+        const listaPostulados = datos.slice(ini, fin);
 
         res.render('curriculums/postulados', {
             postulados: listaPostulados, puestos, provincias, ofertasLaborales,opVistos,opFavoritos, _puestoID, _provinciaID,
@@ -157,12 +157,13 @@ router.post('/:page?', isLoggedIn, async (req, res) => {
         }
         console.log(recordset);
 
-        totalCount = recordset[0].length;
+        var datos = recordset[0].sort((a, b) => b.ID - a.ID);
+        totalCount = datos.length;
         // Instantiate Pagination class
         const Paginate = new Pagination(totalCount, currentPage, pageUri, _perPage);
         const ini = (currentPage - 1) * _perPage;
         const fin = ini + _perPage;
-        var listaPostulados = recordset[0].splice(ini, fin);
+        const listaPostulados = datos.slice(ini, fin);
 
         res.render('curriculums/postulados', {
             postulados: listaPostulados, puestos, provincias, ofertasLaborales,opVistos,opFavoritos, _puestoID, _provinciaID, _ofertaLaboralID,_opVistoID,_opFavoritoID, 
