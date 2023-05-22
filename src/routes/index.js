@@ -129,7 +129,12 @@ router.get('/services', async (req, res) => {
 });
 
 router.get('/jobs', async (req, res) => {
-    const jobs = await pool.query("SELECT *,date_format(fecha, '%d/%m/%Y') as fecha FROM ofertaslaborales where activo=true order by fecha desc");
+    var jobs = await pool.query("SELECT *,date_format(fecha, '%d/%m/%Y') as fecha FROM ofertaslaborales where activo=true;");
+    jobs = jobs.sort(function(a,b){
+        var aa = a.fecha.split('/').reverse().join(),
+        bb = b.fecha.split('/').reverse().join();
+        return aa < bb ? 1 : (aa > bb ? -1 : 0);
+      });
     jobs.forEach(job => {
         if (job.descripcion.length > 249) {
             job.descripcion = job.descripcion.substring(0, 250) + "...";

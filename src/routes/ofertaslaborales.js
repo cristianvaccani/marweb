@@ -10,9 +10,13 @@ const { isLoggedIn } = require('../lib/auth');
 router.get('/', isLoggedIn, async (req, res) => {
     //recupero datos desde la base
     /* const jobs = await pool.query("SELECT *,date_format(fecha, '%d/%m/%Y') as fecha FROM ofertaslaborales WHERE activo=1");  */
-    const jobs = await pool.query("SELECT *,date_format(fecha, '%d/%m/%Y') as fecha,if(activo=false,null,true) as ofertaActiva FROM ofertaslaborales order by activo desc, fecha DESC");
+    var jobs = await pool.query("SELECT *,date_format(fecha, '%d/%m/%Y') as fecha,if(activo=false,null,true) as ofertaActiva FROM ofertaslaborales;");
     const cantActivas= jobs.filter(o=>o.ofertaActiva==true);
-
+    jobs = jobs.sort(function(a,b){
+        var aa = a.fecha.split('/').reverse().join(),
+        bb = b.fecha.split('/').reverse().join();
+        return aa < bb ? 1 : (aa > bb ? -1 : 0);
+      });
     console.log(jobs);
     res.render('ofertaslaborales/list', { jobs,cantActivas });//con esta linea mando el objeto links (entre llaves) a la vista
 
