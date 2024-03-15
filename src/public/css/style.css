@@ -527,6 +527,7 @@ a[href^=tel] {
 
 .btn-primary {
   background: #ffb600;
+  color:#252525;
 }
 
 .btn-dark {
@@ -1196,7 +1197,7 @@ ul.navbar-nav>li>a {
   border-radius: 3px;
   line-height: normal;
   text-transform: capitalize;
-  color: #fff;
+  color: #252525;
   margin-top: 5px;
 }
 
