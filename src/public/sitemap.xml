@@ -3,21 +3,21 @@
 
   <!-- Página principal -->
   <url>
-    <loc>https://www.marellisa.com.ar/</loc>
+    <loc>https://www.marelli.com.ar/</loc>
     <priority>1.0</priority>
     <changefreq>weekly</changefreq>
   </url>
 
   <!-- Quienes Somos -->
   <url>
-    <loc>https://www.marellisa.com.ar/about/</loc>
+    <loc>https://www.marelli.com.ar/about/</loc>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
   </url>
 
   <!-- Productos -->
   <url>
-    <loc>https://www.marellisa.com.ar/cortedoblado/</loc>
+    <loc>https://www.marelli.com.ar/cortedoblado/</loc>
     <priority>0.9</priority>
     <changefreq>weekly</changefreq>
   </url>
@@ -26,83 +26,83 @@
 
   <!-- Obras -->
   <url>
-    <loc>https://www.marellisa.com.ar/works/</loc>
+    <loc>https://www.marelli.com.ar/works/</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
 
   <url>
-    <loc>https://www.marellisa.com.ar/works/noble--celda-de-almacenamiento-de-semillas</loc>
+    <loc>https://www.marelli.com.ar/works/noble--celda-de-almacenamiento-de-semillas</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://www.marellisa.com.ar/works/bateria-de-10-silos-de-acopio</loc>
+    <loc>https://www.marelli.com.ar/works/bateria-de-10-silos-de-acopio</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://www.marellisa.com.ar/works/planta-de-biodiesel-etapas-1-2-y-3</loc>
+    <loc>https://www.marelli.com.ar/works/planta-de-biodiesel-etapas-1-2-y-3</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://www.marellisa.com.ar/works/celda-de-acopio-de-harina</loc>
+    <loc>https://www.marelli.com.ar/works/celda-de-acopio-de-harina</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://www.marellisa.com.ar/works/renova--celda-de-almacenamiento-de-semillas</loc>
+    <loc>https://www.marelli.com.ar/works/renova--celda-de-almacenamiento-de-semillas</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://www.marellisa.com.ar/works/vicentin--celda-de-almacenamiento-de-semillas</loc>
+    <loc>https://www.marelli.com.ar/works/vicentin--celda-de-almacenamiento-de-semillas</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://www.marellisa.com.ar/works/bateria-de-4-silos-de-acopio</loc>
+    <loc>https://www.marelli.com.ar/works/bateria-de-4-silos-de-acopio</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://www.marellisa.com.ar/works/bateria-de-5-silos-de-acopio</loc>
+    <loc>https://www.marelli.com.ar/works/bateria-de-5-silos-de-acopio</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://www.marellisa.com.ar/works/celda-de-almacenamiento-de-pellets-de-soja</loc>
+    <loc>https://www.marelli.com.ar/works/celda-de-almacenamiento-de-pellets-de-soja</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://www.marellisa.com.ar/works/galeria-y-bielas-metalicas</loc>
+    <loc>https://www.marelli.com.ar/works/galeria-y-bielas-metalicas</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://www.marellisa.com.ar/works/planta-de-bioetanol-acabio--obra-civil-edificios</loc>
+    <loc>https://www.marelli.com.ar/works/planta-de-bioetanol-acabio--obra-civil-edificios</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://www.marellisa.com.ar/works/planta-de-bioetanol-acabio--obra-civil</loc>
+    <loc>https://www.marelli.com.ar/works/planta-de-bioetanol-acabio--obra-civil</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://www.marellisa.com.ar/works/descarga-de-vagones--movimiento-de-suelo</loc>
+    <loc>https://www.marelli.com.ar/works/descarga-de-vagones--movimiento-de-suelo</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://www.marellisa.com.ar/works/nuevo-puesto-de-descarga-de-vagones</loc>
+    <loc>https://www.marelli.com.ar/works/nuevo-puesto-de-descarga-de-vagones</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://www.marellisa.com.ar/works/revestimiento-de-barranca</loc>
+    <loc>https://www.marelli.com.ar/works/revestimiento-de-barranca</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
@@ -111,21 +111,21 @@
 
   <!-- Servicios -->
   <url>
-    <loc>https://www.marellisa.com.ar/services/</loc>
+    <loc>https://www.marelli.com.ar/services/</loc>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
   </url>
 
  <!-- Ofertas laborales -->
   <url>
-    <loc>https://www.marellisa.com.ar/jobs/</loc>
+    <loc>https://www.marelli.com.ar/jobs/</loc>
     <priority>0.6</priority>
     <changefreq>weekly</changefreq>
   </url>
 
   <!-- Contacto -->
   <url>
-    <loc>https://www.marellisa.com.ar/contacto/</loc>
+    <loc>https://www.marelli.com.ar/contacto/</loc>
     <priority>0.6</priority>
     <changefreq>yearly</changefreq>
   </url>
