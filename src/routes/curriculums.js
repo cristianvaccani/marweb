@@ -11,60 +11,82 @@ const registrosPorPagina = 20;
 //importo esta funcion para validar el ingreso a paginas seguras
 const { isLoggedIn } = require('../lib/auth');
 
+// Función auxiliar para obtener los valores de los filtros
+function getFilterValues(req) {
+    // Si la sesión no tiene puestoID, o no es un array, se inicializa como un array con el valor 0
+    let _puestoID = req.session.puestoID || [0];
+    if (!Array.isArray(_puestoID)) {
+        _puestoID = [_puestoID];
+    }
+    // Si '0' (Todos) está presente, se elimina cualquier otro ID.
+    if (_puestoID.includes('0')) {
+        _puestoID = ['0'];
+    }
+    const puestosIDsStr = _puestoID.length > 0 ? _puestoID.join(',') : '0';
+
+    const _provinciaID = req.session.provinciaID || 0;
+   
+    let _localidadID = req.session.localidadID || ["Todas"];
+    if (!Array.isArray(_localidadID)) {
+        _localidadID = [_localidadID];
+    }
+    // Si 'Todas' está presente, se elimina cualquier otra localidad.
+    if (_localidadID.includes('Todas')) {
+        _localidadID = ["Todas"];
+    }
+    const localidadesParaSQL = _localidadID.length > 0 ? _localidadID.join(',') : 'Todas';
+
+    const _sexoID = req.session.sexoID || 0;
+    const _ofertaLaboralID = req.session.ofertaLaboralID || 0;
+    const _edadDesde = req.session.edadDesde || null;
+    const _edadHasta = req.session.edadHasta || null;
+    const _opVistoID = req.session.opVistoID || 0;
+    const _opFavoritoID = req.session.opFavoritoID || 0;
+
+    return {
+        _puestoID, _provinciaID, _localidadID, _sexoID, _ofertaLaboralID,
+        _edadDesde, _edadHasta, _opVistoID, _opFavoritoID,
+        puestosIDsStr, localidadesParaSQL
+    };
+}
+
 router.get('/:page?', isLoggedIn, async (req, res) => {
 
-    if (!req.session.puestoID) {
-        req.session.puestoID = 0;
-    }
-    const _puestoID = req.session.puestoID;
-    if (!req.session.provinciaID) {
-        req.session.provinciaID = 0;
-    }
-    const _provinciaID = req.session.provinciaID;
-    if (!req.session.ofertaLaboralID) {
-        req.session.ofertaLaboralID = 0;
-    }
-    const _ofertaLaboralID = req.session.ofertaLaboralID;
-    if (!req.session.edadDesde) {
-        req.session.edadDesde = null;
-    }
-    const _edadDesde = req.session.edadDesde;
-    if (!req.session.edadHasta) {
-        req.session.edadHasta = null;
-    }
-    const _edadHasta = req.session.edadHasta;
-    if (!req.session.opVistoID) {
-        req.session.opVistoID = 0;
-    }
-    const _opVistoID = req.session.opVistoID;
-    if (!req.session.opFavoritoID) {
-        req.session.opFavoritoID = 0;
-    }
-    const _opFavoritoID = req.session.opFavoritoID;
+    // Inicializa los valores de la sesión si no existen
+    if (!req.session.puestoID) req.session.puestoID = [0];
+    if (!req.session.provinciaID) req.session.provinciaID = 0;
+    if (!req.session.localidadID) req.session.localidadID = ["Todas"];
+    if (!req.session.sexoID) req.session.sexoID = 0;
+    if (!req.session.ofertaLaboralID) req.session.ofertaLaboralID = 0;
+    if (!req.session.edadDesde) req.session.edadDesde = null;
+    if (!req.session.edadHasta) req.session.edadHasta = null;
+    if (!req.session.opVistoID) req.session.opVistoID = 0;
+    if (!req.session.opFavoritoID) req.session.opFavoritoID = 0;
 
-    const puestos = await GetPuestos(_puestoID);
-    const provincias = await GetProvincias(_provinciaID);
-    const ofertasLaborales = await GetOfertasLaborales(_ofertaLaboralID);
-    const opVistos = await GetOpVistos(_opVistoID);
-    const opFavoritos = await GetOpFavoritos(_opFavoritoID);
+    const filtros = getFilterValues(req);
+
+    const puestos = await GetPuestos(filtros._puestoID);
+    const provincias = await GetProvincias(filtros._provinciaID);
+    const localidades = await GetLocalidades(filtros._localidadID);
+    const sexos = await GetSexos(filtros._sexoID);
+    const ofertasLaborales = await GetOfertasLaborales(filtros._ofertaLaboralID);
+    const opVistos = await GetOpVistos(filtros._opVistoID);
+    const opFavoritos = await GetOpFavoritos(filtros._opFavoritoID);
 
     const _perPage = registrosPorPagina;
-    var page_id = req.session.currentPage;
-    // Get current page from url (request parameter)
-    if (req.params.page != 'undefined') {
-        var page_id = parseInt(req.params.page);
-    }
-    //const page_id = 1;
-    const currentPage = (isNaN(page_id)) ? 1 : page_id;
+    const currentPage = parseInt(req.params.page) || req.session.currentPage || 1;
     req.session.currentPage = currentPage;
-    //Change pageUri to your page url without the 'page' query string 
     const pageUri = '/curriculums/';
 
-    //let sqlQuery = "call filtrarCurriculums(" + _puestoID + "," + _provinciaID + "," + _ofertaLaboralID + "," + _edadDesde + "," + _edadHasta + ")";
-    let sqlQuery = "call obtenerCurriculums(" + _puestoID + "," + _provinciaID + "," + _ofertaLaboralID + "," + _edadDesde + "," + _edadHasta + "," + _opVistoID + "," + _opFavoritoID + ")";
-    console.log(sqlQuery)
+    // Usa el placeholder '?' y pasa los valores como un array
+    const sqlQuery = "call obtenerCurriculums(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    const params = [
+        filtros.puestosIDsStr, filtros._provinciaID, filtros._ofertaLaboralID, 
+        filtros._edadDesde, filtros._edadHasta, filtros._opVistoID, 
+        filtros._opFavoritoID, filtros.localidadesParaSQL, filtros._sexoID
+    ];
 
-    pool.query(sqlQuery, function (err, recordset) {
+    pool.query(sqlQuery,params, function (err, recordset) {
         if (err) {
             console.log(err);
 
@@ -80,8 +102,8 @@ router.get('/:page?', isLoggedIn, async (req, res) => {
         const listaPostulados = datos.slice(ini, fin);
 
         res.render('curriculums/postulados', {
-            postulados: listaPostulados, puestos, provincias, ofertasLaborales,opVistos,opFavoritos, _puestoID, _provinciaID,
-            _ofertaLaboralID, _opVistoID,_opFavoritoID, edadDesde: _edadDesde, edadHasta: _edadHasta, pages: Paginate.links(), totalPostulados: totalCount, pageUri: pageUri
+            postulados: listaPostulados, puestos, provincias, localidades,sexos, ofertasLaborales, opVistos, opFavoritos, /* _puestoID, _provinciaID,
+            _ofertaLaboralID, _opVistoID, _opFavoritoID, */ edadDesde: filtros._edadDesde, edadHasta: filtros._edadHasta, pages: Paginate.links(), totalPostulados: totalCount, pageUri: pageUri
         });
 
     });
@@ -90,67 +112,40 @@ router.get('/:page?', isLoggedIn, async (req, res) => {
 
 router.post('/:page?', isLoggedIn, async (req, res) => {
 
-    if (req.body.puestoID) {
-        req.session.puestoID = req.body.puestoID;
-    } else {
-        req.session.puestoID = 0;
-    }
-    const _puestoID = req.session.puestoID;
-    if (req.body.provinciaID) {
-        req.session.provinciaID = req.body.provinciaID;
-    } else {
-        req.session.provinciaID = 0;
-    }
-    const _provinciaID = req.session.provinciaID;
-    if (req.body.ofertaLaboralID) {
-        req.session.ofertaLaboralID = req.body.ofertaLaboralID;
-    } else {
-        req.session.ofertaLaboralID = 0;
-    }
-    const _ofertaLaboralID = req.session.ofertaLaboralID;
-    if (req.body.edadDesde) {
-        req.session.edadDesde = req.body.edadDesde;
-    } else {
-        req.session.edadDesde = null;
-    }
-    const _edadDesde = req.session.edadDesde;
-    if (req.body.edadHasta) {
-        req.session.edadHasta = req.body.edadHasta;
-    } else {
-        req.session.edadHasta = null;
-    }
-    const _edadHasta = req.session.edadHasta;
-    if (req.body.opVistoID) {
-        req.session.opVistoID = req.body.opVistoID;
-    } else {
-        req.session.opVistoID = 0;
-    }
-    const _opVistoID = req.session.opVistoID;
-    if (req.body.opFavoritoID) {
-        req.session.opFavoritoID = req.body.opFavoritoID;
-    } else {
-        req.session.opFavoritoID = 0;
-    }
-    const _opFavoritoID = req.session.opFavoritoID;
+    // Actualiza los valores de la sesión
+    req.session.puestoID = req.body.puestoID || [0];
+    req.session.provinciaID = req.body.provinciaID || 0;
+    req.session.localidadID = req.body.localidadID || ["Todas"];
+    req.session.sexoID = req.body.sexoID || 0;
+    req.session.ofertaLaboralID = req.body.ofertaLaboralID || 0;
+    req.session.edadDesde = req.body.edadDesde || null;
+    req.session.edadHasta = req.body.edadHasta || null;
+    req.session.opVistoID = req.body.opVistoID || 0;
+    req.session.opFavoritoID = req.body.opFavoritoID || 0;
 
-    const puestos = await GetPuestos(_puestoID);
-    const provincias = await GetProvincias(_provinciaID);
-    const ofertasLaborales = await GetOfertasLaborales(_ofertaLaboralID);
-    const opVistos = await GetOpVistos(_opVistoID);
-    const opFavoritos = await GetOpFavoritos(_opFavoritoID);
+    const filtros = getFilterValues(req);
+
+    const puestos = await GetPuestos(filtros._puestoID);
+    const provincias = await GetProvincias(filtros._provinciaID);
+    const localidades = await GetLocalidades(filtros._localidadID);
+    const sexos = await GetSexos(filtros._sexoID);
+    const ofertasLaborales = await GetOfertasLaborales(filtros._ofertaLaboralID);
+    const opVistos = await GetOpVistos(filtros._opVistoID);
+    const opFavoritos = await GetOpFavoritos(filtros._opFavoritoID);
 
     const _perPage = registrosPorPagina;
-    // Get current page from url (request parameter)
-    const page_id = parseInt(req.params.page);
-    const currentPage = (isNaN(page_id)) ? 1 : page_id;
-    //Change pageUri to your page url without the 'page' query string 
+    const currentPage = parseInt(req.params.page) || req.session.currentPage || 1;
     const pageUri = '/curriculums/';
 
-    //let sqlQuery = "call filtrarCurriculums(" + _puestoID + "," + _provinciaID + "," + _ofertaLaboralID + "," + _edadDesde + "," + _edadHasta + ")";
-    let sqlQuery = "call obtenerCurriculums(" + _puestoID + "," + _provinciaID + "," + _ofertaLaboralID + "," + _edadDesde + "," + _edadHasta + "," + _opVistoID + "," + _opFavoritoID + ")";
-    console.log(sqlQuery)
+    // Usa el placeholder '?' y pasa los valores como un array
+    const sqlQuery = "call obtenerCurriculums(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    const params = [
+        filtros.puestosIDsStr, filtros._provinciaID, filtros._ofertaLaboralID, 
+        filtros._edadDesde, filtros._edadHasta, filtros._opVistoID, 
+        filtros._opFavoritoID, filtros.localidadesParaSQL, filtros._sexoID
+    ];
 
-    pool.query(sqlQuery, function (err, recordset) {
+    pool.query(sqlQuery, params, function (err, recordset) {
         if (err) {
             console.log(err);
 
@@ -166,8 +161,8 @@ router.post('/:page?', isLoggedIn, async (req, res) => {
         const listaPostulados = datos.slice(ini, fin);
 
         res.render('curriculums/postulados', {
-            postulados: listaPostulados, puestos, provincias, ofertasLaborales,opVistos,opFavoritos, _puestoID, _provinciaID, _ofertaLaboralID,_opVistoID,_opFavoritoID, 
-            edadDesde: _edadDesde, edadHasta: _edadHasta, pages: Paginate.links(), totalPostulados: totalCount, pageUri: pageUri
+            postulados: listaPostulados, puestos, provincias, localidades, sexos, ofertasLaborales, opVistos, opFavoritos, /* _puestoID, _provinciaID, _ofertaLaboralID, _opVistoID, _opFavoritoID, */
+            edadDesde: filtros._edadDesde, edadHasta: filtros._edadHasta, pages: Paginate.links(), totalPostulados: totalCount, pageUri: pageUri
         });
 
     });
@@ -236,10 +231,10 @@ router.post('/edit/:id', isLoggedIn, async (req, res) => {
         trabajoAnterior, titulos, informacionAdicional,
         trabajoEnMarelli, remuneracion, ofertaLaboralID
     } = req.body;
-    cv.trabajoEnMarelli = (cv.trabajoEnMarelli != undefined)?1:0;
-    let yaRevisado = (req.body.revisado != undefined)?1:0;
+    cv.trabajoEnMarelli = (cv.trabajoEnMarelli != undefined) ? 1 : 0;
+    let yaRevisado = (req.body.revisado != undefined) ? 1 : 0;
     cv.revisado = yaRevisado;
-    let favorito = (req.body.esFavorito != undefined)?1:0;
+    let favorito = (req.body.esFavorito != undefined) ? 1 : 0;
     cv.esFavorito = favorito;
     pool.query("UPDATE curriculum set ? WHERE ID =?", [cv, cv.ID]);
     req.flash('success', 'Curriculum editado correctamente!');
@@ -318,15 +313,22 @@ router.post('/delete/:id', isLoggedIn, async (req, res) => {
     });
 })
 
-async function GetPuestos(valor) {
+async function GetPuestos(valores) {
     // <-- declare the function as async
 
     const puestos = await pool.query("SELECT * FROM cnf_puestos");
     const newPuesto = { id: 0, descripcion: "Todos" };
     puestos.unshift(newPuesto);
 
-    const seleccionado = puestos.find(e => e.id == valor);
-    seleccionado.selected = true;
+    // Si 'valores' es un string, lo convertimos en un array
+    const selectedValues = Array.isArray(valores) ? valores : [valores];
+    
+    // Marcamos como seleccionados todos los IDs que se encuentren en el array 'selectedValues'
+    puestos.forEach(puesto => {
+        if (selectedValues.includes(puesto.id.toString())) {
+            puesto.selected = true;
+        }
+    });
 
     return puestos;
 };
@@ -342,6 +344,26 @@ async function GetProvincias(valor) {
 
 
     return provincias;
+};
+
+async function GetLocalidades(valores) {
+    const localidades = await pool.query("select DISTINCT c.localidad from curriculum c order by c.localidad;");
+
+    const newlocalidad = { localidad: "Todas" };
+    localidades.unshift(newlocalidad);
+
+    // Si 'valores' es un string, lo convertimos en un array
+    const selectedValues = Array.isArray(valores) ? valores.map(v => v.toString()) : [valores.toString()];
+
+    // Marcamos como seleccionados todos los IDs que se encuentren en el array 'selectedValues'
+    localidades.forEach(localidad => {
+        if (selectedValues.includes(localidad.localidad)) {
+            localidad.selected = true;
+        }
+    });
+
+
+    return localidades;
 };
 
 async function GetOfertasLaborales(valor) {

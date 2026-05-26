@@ -5,7 +5,7 @@
       <div class="form-row">
         <div class="col-md-2">
           <label for="puestoID">Puesto</label>
-          <select class="custom-select" name="puestoID" id="puestoID">
+          <select class="selectpicker form-control" name="puestoID" id="puestoID" multiple data-actions-box="true" data-live-search="true" title="Seleccionar opciones">
             {{#each puestos}}
             <option value="{{id}}" {{#selected}}selected="selected" {{/selected}}>
               {{descripcion}}
@@ -13,7 +13,8 @@
             {{/each}}
           </select>
         </div>
-        <div class="col-md-2">
+
+        <div class="col-md-1">
           <label for="provincia">Provincia</label>
           <select class="custom-select" name="provinciaID" id="provinciaID">
             {{#each provincias}}
@@ -23,7 +24,28 @@
             {{/each}}
           </select>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
+          <label for="localidad">Localidad</label>
+          <select class="selectpicker form-control" name="localidadID" id="localidadID" multiple data-actions-box="true" data-live-search="true" title="Seleccionar opciones">
+          {{!-- <select class="custom-select" name="localidadID" id="localidadID" multiple> --}}
+            {{#each localidades}}
+            <option value="{{localidad}}" {{#selected}}selected="selected" {{/selected}}>
+              {{localidad}}
+            </option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="col-md-1">
+          <label for="sexo">Sexo</label>
+          <select class="custom-select" name="sexoID" id="sexoID">
+            {{#each sexos}}
+            <option value="{{id}}" {{#selected}}selected="selected" {{/selected}}>
+              {{descripcion}}
+            </option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="col-md-1">
           <label for="ofertaLaboral">Oferta laboral</label>
           <select class="custom-select" name="ofertaLaboralID" id="ofertaLaboralID">
             {{#each ofertasLaborales}}
@@ -64,7 +86,7 @@
           </select>
         </div>
         <div class="col-md-1">
-          
+
           <button class="btn btn-primary" style="margin-top: 34px;" type="submit" name="btnBuscar">Buscar</button>
         </div>
       </div>

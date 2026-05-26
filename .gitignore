@@ -2,5 +2,7 @@ node_modules
 database
 notas.txt
 package copy.json
-keys.js
+src/keys.js
 archivosCV
+script update DB.txt
+src/public/fotosObras/

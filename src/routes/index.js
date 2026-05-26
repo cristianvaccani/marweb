@@ -128,6 +128,10 @@ router.get('/services', async (req, res) => {
     res.render('services', { esIndex: true });
 });
 
+router.get('/cortedoblado', async (req, res) => {
+    res.render('cortedoblado', { esIndex: true });
+});
+
 router.get('/jobs', async (req, res) => {
     var jobs = await pool.query("SELECT *,date_format(fecha, '%d/%m/%Y') as fecha FROM ofertaslaborales where activo=true;");
     jobs = jobs.sort(function(a,b){
@@ -166,9 +170,9 @@ router.get('/works', async (req, res) => {
     res.render('works', { esIndex: true, works,tipos });
 });
 
-router.get('/work/:id', async (req, res) => {
-    const id = req.params.id;
-    const works = await pool.query("SELECT o.*,t.descripcion as tipoObra, GROUP_CONCAT(f.nombre) AS fotos FROM obras o inner join cnf_tiposobras t on t.id = o.tipoObraID left JOIN obrasfotos f on o.id = f.obraID where o.id=? GROUP BY o.id;", [id]);
+router.get('/work/:titulo', async (req, res) => {
+    const titulo = req.params.titulo;
+    const works = await pool.query("SELECT o.*,t.descripcion as tipoObra, GROUP_CONCAT(f.nombre) AS fotos FROM obras o inner join cnf_tiposobras t on t.id = o.tipoObraID left JOIN obrasfotos f on o.id = f.obraID where o.titulo=? GROUP BY o.id;", [titulo]);
     if (works.length === 0) {
         res.redirect('/error');
     } else {

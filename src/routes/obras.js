@@ -42,6 +42,18 @@ router.get('/add', isLoggedIn, async (req, res) => {
     res.render('obras/add', { tipos });
 });
 
+function generarSlug(texto) {
+  return texto
+    .toString()
+    .toLowerCase()
+    .trim()
+    .normalize('NFD') // Separa los acentos de las letras (ej: 'ó' se vuelve 'o' + '´')
+    .replace(/[\u0300-\u036f]/g, '') // Elimina los acentos
+    .replace(/\s+/g, '-') // Reemplaza uno o más espacios por un solo guion
+    .replace(/[^\w\-]+/g, '') // Elimina cualquier carácter que no sea letra, número o guion
+    .replace(/\-\-+/g, '-'); // Reemplaza múltiples guiones seguidos por uno solo
+}
+
 router.post('/add', isLoggedIn, async (req, res) => {
     obraFotos(req, res, (err) => {
         console.log('Entered profile upload.');
@@ -50,7 +62,8 @@ router.post('/add', isLoggedIn, async (req, res) => {
             res.redirect('/obras/list');
         } else {
             const { titulo, descripcion, nombre, cliente, ubicacion, tipoObraID, anio, activo } = req.body;
-            const obra = { titulo, descripcion, nombre, cliente, ubicacion, tipoObraID, anio, activo };
+            let tituloURL = generarSlug(titulo);
+            const obra = { titulo:tituloURL, descripcion, nombre, cliente, ubicacion, tipoObraID, anio, activo };
 
             const valor_activo = (activo != undefined);
             obra.activo = valor_activo;
@@ -111,7 +124,8 @@ router.get('/edit/:id', isLoggedIn, async (req, res) => {
 router.post('/edit/:id', isLoggedIn, async (req, res) => {
     const { id } = req.params;
     const { titulo, descripcion, nombre, cliente, ubicacion, tipoObraID, anio, activo } = req.body;
-    const obra = { titulo, descripcion, nombre, cliente, ubicacion, tipoObraID, anio, activo };
+    let tituloURL = generarSlug(titulo);
+    const obra = { titulo:tituloURL, descripcion, nombre, cliente, ubicacion, tipoObraID, anio, activo };
 
     const valor_activo = (activo != undefined);
     obra.activo = valor_activo;
@@ -273,7 +287,7 @@ const obraFotos = multer({
 
 function checkFileType(file, cb) {
     // Allowed ext
-    const filetypes = /jpg|jpeg|png/;
+    const filetypes = /jpg|jpeg|png|webp/;
     // Check ext
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
     // Check mime
