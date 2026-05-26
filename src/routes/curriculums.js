@@ -79,7 +79,7 @@ router.get('/:page?', isLoggedIn, async (req, res) => {
     const pageUri = '/curriculums/';
 
     // Usa el placeholder '?' y pasa los valores como un array
-    const sqlQuery = "call obtenerCurriculums(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    const sqlQuery = "call obtenerCurriculumsv2(?, ?, ?, ?, ?, ?, ?, ?, ?)";
     const params = [
         filtros.puestosIDsStr, filtros._provinciaID, filtros._ofertaLaboralID, 
         filtros._edadDesde, filtros._edadHasta, filtros._opVistoID, 
@@ -138,7 +138,7 @@ router.post('/:page?', isLoggedIn, async (req, res) => {
     const pageUri = '/curriculums/';
 
     // Usa el placeholder '?' y pasa los valores como un array
-    const sqlQuery = "call obtenerCurriculums(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    const sqlQuery = "call obtenerCurriculumsv2(?, ?, ?, ?, ?, ?, ?, ?, ?)";
     const params = [
         filtros.puestosIDsStr, filtros._provinciaID, filtros._ofertaLaboralID, 
         filtros._edadDesde, filtros._edadHasta, filtros._opVistoID, 
