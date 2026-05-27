@@ -10,14 +10,14 @@
 
   <!-- Quienes Somos -->
   <url>
-    <loc>https://www.marelli.com.ar/about/</loc>
+    <loc>https://www.marelli.com.ar/about</loc>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
   </url>
 
   <!-- Productos -->
   <url>
-    <loc>https://www.marelli.com.ar/cortedoblado/</loc>
+    <loc>https://www.marelli.com.ar/cortedoblado</loc>
     <priority>0.9</priority>
     <changefreq>weekly</changefreq>
   </url>
@@ -26,7 +26,7 @@
 
   <!-- Obras -->
   <url>
-    <loc>https://www.marelli.com.ar/works/</loc>
+    <loc>https://www.marelli.com.ar/works</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
@@ -111,21 +111,21 @@
 
   <!-- Servicios -->
   <url>
-    <loc>https://www.marelli.com.ar/services/</loc>
+    <loc>https://www.marelli.com.ar/services</loc>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
   </url>
 
  <!-- Ofertas laborales -->
   <url>
-    <loc>https://www.marelli.com.ar/jobs/</loc>
+    <loc>https://www.marelli.com.ar/jobs</loc>
     <priority>0.6</priority>
     <changefreq>weekly</changefreq>
   </url>
 
   <!-- Contacto -->
   <url>
-    <loc>https://www.marelli.com.ar/contacto/</loc>
+    <loc>https://www.marelli.com.ar/contact</loc>
     <priority>0.6</priority>
     <changefreq>yearly</changefreq>
   </url>
