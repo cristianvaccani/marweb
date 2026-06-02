@@ -128,8 +128,8 @@ router.get('/services', async (req, res) => {
     res.render('services', { esIndex: true });
 });
 
-router.get('/cortedoblado', async (req, res) => {
-    res.render('cortedoblado', { esIndex: true });
+router.get('/corte-y-doblado-de-hierro', async (req, res) => {
+    res.render('corte-y-doblado-de-hierro', { esIndex: true });
 });
 
 router.get('/jobs', async (req, res) => {
